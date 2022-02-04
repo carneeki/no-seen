@@ -1,8 +1,11 @@
 const INSTAGRAM_KEY = 'instagram'
 const FACEBOOK_KEY = 'facebook'
-const URLS_TO_CANCEL = [
-    '*://*.facebook.com/ajax/mercury/change_read_status.php*',
-    '*://*.instagram.com/stories/reel/seen',
+const BLOCKED_URIS = [
+	'*://*.facebook.com/ajax/mercury/change_read_status.php*',
+	'*://*.instagram.com/ajax/bz*',
+	'*://*.instagram.com/qp/batch_fetch_web*',
+	'*://*.instagram.com/api/v1/stories/reel/seen',
+	'*://*.instagram.com/api/v1/direct_v2/threads/*/items/*/seen/',
 ]
 
 const isNodeEnv = typeof exports !== 'undefined'
@@ -34,7 +37,7 @@ const handleRequest = ({ url }) =>
 const listenToRequests = () =>
     browser.webRequest.onBeforeRequest.addListener(
         handleRequest,
-        { urls: URLS_TO_CANCEL },
+        { urls: BLOCKED_URIS },
         ['blocking']
     )
 
